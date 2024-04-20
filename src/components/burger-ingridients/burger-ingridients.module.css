@@ -1,0 +1,17 @@
+.burgerIngridients {
+    height: 100%;
+}
+.header {
+    height: 155px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.tab {
+    display: flex;
+}
+.container {
+    height: Calc(100% - 155px);
+    overflow: scroll;
+}
+

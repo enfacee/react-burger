@@ -1,26 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
-
+import AppHeader from './components/app-header/app-header';
+import BurgerIngridients from './components/burger-ingridients/burger-ingridients';
+import BurgerConstructor from './components/burger-constructor/burger-constructor';
+const urlApi = 'https://norma.nomoreparties.space/api/ingredients';
 function App() {
-  return (
+  const [data, setData] = useState({
+    ingridients: null,
+    loading: true,
+    isError: false
+  });
+  
+  useEffect(() => {
+    const getIngridients = async () => {
+      setData({...data, loading: true});
+      const res = await fetch(urlApi);
+      try {
+        const ingridients = await res.json();
+        setData({...data, loading: false, ingridients: ingridients.data});
+      }
+      catch(error){
+        setData({...data, loading: false, isError: true});
+      }
+  };
+    getIngridients();
+  }, []);
+
+  return !data.isError && data.ingridients?(
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <AppHeader/>
+      <div className="main">
+        <div className="box">
+          <BurgerIngridients data={data.ingridients} />
+        </div>
+        <div className="box">
+          <BurgerConstructor data={data.ingridients}/>
+        </div>
+      </div>
     </div>
-  );
+  ):(
+  <div>Ошибка</div>
+);
 }
 
 export default App;

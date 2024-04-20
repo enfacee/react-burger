@@ -1,0 +1,19 @@
+.main {
+    height: Calc(100% - 100px);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.container {
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footer {
+    justify-content: flex-end;
+    gap: 40px;
+    display: flex;
+}
