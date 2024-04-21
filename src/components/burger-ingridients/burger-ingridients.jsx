@@ -1,9 +1,10 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
+import PropTypes from 'prop-types'
 import styles from './burger-ingridients.module.css';
 import IngridientsCategory from "./ingridient-category/ingridient-category";
 
-export default function BurgerIngridients({data}){
+function BurgerIngridients({items}){
     const [current, setCurrent] = useState('buns')
     return (
         <main className={styles.burgerIngridients}>
@@ -16,10 +17,20 @@ export default function BurgerIngridients({data}){
                 </div>
             </div>
             <div className={styles.container}>
-                <IngridientsCategory items={data} filter={'bun'}/>
-                <IngridientsCategory items={data} filter={'sauce'}/>
-                <IngridientsCategory items={data} filter={'main'}/>
+                <IngridientsCategory items={items} filter={'bun'}/>
+                <IngridientsCategory items={items} filter={'sauce'}/>
+                <IngridientsCategory items={items} filter={'main'}/>
             </div>
         </main>
     );
 }
+const ingridientPropTypes = PropTypes.shape({
+    image: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired
+});
+BurgerIngridients.propTypes = {
+    items: PropTypes.arrayOf(ingridientPropTypes).isRequired
+}
+
+export default BurgerIngridients;

@@ -1,6 +1,17 @@
 import Ingridient from "../ingridient/ingridient"
 import styles from "./ingridient-category.module.css"
+import PropTypes from 'prop-types'
 
+const ingridientPropTypes = PropTypes.shape({
+    image: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired
+});
+
+IngridientsCategory.propTypes = {
+    items: PropTypes.arrayOf(ingridientPropTypes).isRequired,
+    filter: PropTypes.string.isRequired
+}
 export default function IngridientsCategory ({filter, items}){
     return (
         <>

@@ -1,5 +1,18 @@
 import styles from './ingridient.module.css';
 import Price from "../../price/price";
+import PropTypes from 'prop-types'
+
+
+const ingridientPropTypes = PropTypes.shape({
+    image: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired
+});
+
+Ingridient.propTypes = {
+    ingridient: ingridientPropTypes.isRequired
+}
+
 export default function Ingridient({ingridient}){
     return(
         <div className={styles.ingridient}>

@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import AppHeader from './components/app-header/app-header';
 import BurgerIngridients from './components/burger-ingridients/burger-ingridients';
 import BurgerConstructor from './components/burger-constructor/burger-constructor';
 const urlApi = 'https://norma.nomoreparties.space/api/ingredients';
+
 function App() {
   const [data, setData] = useState({
     ingridients: null,
@@ -14,32 +15,32 @@ function App() {
   useEffect(() => {
     const getIngridients = async () => {
       setData({...data, loading: true});
-      const res = await fetch(urlApi);
       try {
+        const res = await fetch(urlApi);
         const ingridients = await res.json();
         setData({...data, loading: false, ingridients: ingridients.data});
       }
-      catch(error){
+      catch(error) {
         setData({...data, loading: false, isError: true});
       }
-  };
+    };
     getIngridients();
   }, []);
 
-  return !data.isError && data.ingridients?(
+  return !data.isError && data.ingridients ? (
     <div className="App">
       <AppHeader/>
-      <div className="main">
+      <div className="main-container mb-8">
         <div className="box">
-          <BurgerIngridients data={data.ingridients} />
+          <BurgerIngridients items={data.ingridients} />
         </div>
         <div className="box">
-          <BurgerConstructor data={data.ingridients}/>
+          <BurgerConstructor items={data.ingridients}/>
         </div>
       </div>
     </div>
   ):(
-  <div>Ошибка</div>
+  <h1 className="text text_type_main-large mt-10 ml-10">Упс. Что-то пошло не так....</h1>
 );
 }
 

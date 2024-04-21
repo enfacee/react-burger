@@ -1,6 +1,15 @@
 import { Button, ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './burger-constructor.module.css';
 import Price from "../price/price";
+import PropTypes from 'prop-types'
+
+
+const ingridientPropTypes = PropTypes.shape({
+    image_mobile: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired
+});
+
 const Bun =({ingridient, isTop = true})=>{
     return(
         <ConstructorElement 
@@ -11,16 +20,17 @@ const Bun =({ingridient, isTop = true})=>{
         thumbnail={ingridient.image_mobile}/>
     )
 };
-const Ingridient =({ingridient})=>{
-    return(
-        <ConstructorElement text={ingridient.name}
-        price={ingridient.price}
-        thumbnail={ingridient.image_mobile}/>
-    )
+Bun.propTypes = {
+    ingridient: ingridientPropTypes.isRequired,
+    isTop: PropTypes.bool
 };
-export default function BurgerContructor({data}){
-    const bun = data[0];
-    const ingridients = data.filter(item=>item.type==='main');
+
+BurgerContructor.propTypes = {
+    items: PropTypes.arrayOf(ingridientPropTypes).isRequired
+};
+export default function BurgerContructor({items}){
+    const bun = items[0];
+    const ingridients = items.filter(item=>item.type==='main');
     const price = bun.price+ ingridients.reduce((acc, {price})=>{
         return acc+ price;
     }, bun.price);
@@ -30,7 +40,9 @@ export default function BurgerContructor({data}){
             <div className={styles.container}>
             {
                 ingridients.map((item, key)=>
-                    <Ingridient key={key} ingridient={item}/>
+                    <ConstructorElement key={key} text={item.name}
+                        price={item.price}
+                        thumbnail={item.image_mobile}/>
                 )
             }
             </div>

@@ -1,4 +1,10 @@
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import PropTypes from 'prop-types'
+
+Price.propTypes = {
+    price: PropTypes.number.isRequired,
+    size: PropTypes.string
+};
 
 export default function Price({price, size="default"}){
     return(

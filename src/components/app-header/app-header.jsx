@@ -1,5 +1,6 @@
 import {BurgerIcon, ListIcon, Logo, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './app-header.module.css';
+import PropTypes from 'prop-types'
 
 const ButtonItem = (props)=> (
     <div className ={`${styles.button} p-5 ml-2 mt-4 mb-4`}>
@@ -12,6 +13,13 @@ const ButtonsContainer = (props)=> (
         {props.children}
     </div>
 );
+ButtonItem.propTypes = {
+    chuldren: PropTypes.element
+};
+ButtonsContainer.propTypes = {
+    className: PropTypes.string,
+    chuldren: PropTypes.element
+};
 
 export default function AppHeader(){
     return(
