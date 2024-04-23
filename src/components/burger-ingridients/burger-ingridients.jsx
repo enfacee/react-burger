@@ -3,8 +3,9 @@ import { useState } from "react";
 import PropTypes from 'prop-types'
 import styles from './burger-ingridients.module.css';
 import IngridientsCategory from "./ingridient-category/ingridient-category";
+import {ingridientPropTypes}  from "../../utils/ingridient-prop-types"
 
-function BurgerIngridients({items}){
+function BurgerIngridients({items, onIngridientClick}){
     const [current, setCurrent] = useState('buns')
     return (
         <main className={styles.burgerIngridients}>
@@ -17,20 +18,16 @@ function BurgerIngridients({items}){
                 </div>
             </div>
             <div className={styles.container}>
-                <IngridientsCategory items={items} filter={'bun'}/>
-                <IngridientsCategory items={items} filter={'sauce'}/>
-                <IngridientsCategory items={items} filter={'main'}/>
+                <IngridientsCategory items={items} filter={'bun'} onIngridientClick={onIngridientClick}/>
+                <IngridientsCategory items={items} filter={'sauce'} onIngridientClick={onIngridientClick}/>
+                <IngridientsCategory items={items} filter={'main'} onIngridientClick={onIngridientClick}/>
             </div>
         </main>
     );
 }
-const ingridientPropTypes = PropTypes.shape({
-    image: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired
-});
 BurgerIngridients.propTypes = {
-    items: PropTypes.arrayOf(ingridientPropTypes).isRequired
+    items: PropTypes.arrayOf(ingridientPropTypes).isRequired,
+    onIngridientClick: PropTypes.func.isRequired,
 }
 
 export default BurgerIngridients;

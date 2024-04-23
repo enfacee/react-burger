@@ -1,0 +1,14 @@
+.modal {
+    width: 720px;
+    border-radius: 5vh;
+    background-color: #1C1C21;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.content{
+    
+}

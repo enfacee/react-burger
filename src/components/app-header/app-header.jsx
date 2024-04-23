@@ -31,7 +31,7 @@ export default function AppHeader(){
             </ButtonItem>
             <ButtonItem>
                 <ListIcon type="secondary"/>
-                <p className="text text_type_main-default ml-2">Лента заказов</p>
+                <p className="text text_type_main-default text_color_inactive ml-2">Лента заказов</p>
             </ButtonItem>
         </ButtonsContainer>
         <ButtonsContainer className={styles.middle}>
@@ -40,7 +40,7 @@ export default function AppHeader(){
         <ButtonsContainer className={styles.right}>
             <ButtonItem>
                 <ProfileIcon type="secondary"/>
-                <p className="text text_type_main-default ml-2">Личный кабинет</p>
+                <p className="text text_type_main-default text_color_inactive ml-2">Личный кабинет</p>
             </ButtonItem>
         </ButtonsContainer>
       </header>)

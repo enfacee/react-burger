@@ -12,6 +12,6 @@
 }
 .container {
     height: Calc(100% - 155px);
-    overflow: scroll;
+    overflow-y: scroll;
 }
 

@@ -1,18 +1,14 @@
-import Ingridient from "../ingridient/ingridient"
-import styles from "./ingridient-category.module.css"
+import Ingridient from '../ingridient/ingridient'
+import styles from './ingridient-category.module.css'
 import PropTypes from 'prop-types'
-
-const ingridientPropTypes = PropTypes.shape({
-    image: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired
-});
+import {ingridientPropTypes} from '../../../utils/ingridient-prop-types'
 
 IngridientsCategory.propTypes = {
     items: PropTypes.arrayOf(ingridientPropTypes).isRequired,
-    filter: PropTypes.string.isRequired
+    onIngridientClick: PropTypes.func.isRequired,
+    filter: PropTypes.oneOf(['bun', 'sauce', 'main']).isRequired
 }
-export default function IngridientsCategory ({filter, items}){
+export default function IngridientsCategory ({filter, items, onIngridientClick}){
     return (
         <>
             <h2 className="text text_type_main-medium mt-10 mb-6">
@@ -23,10 +19,13 @@ export default function IngridientsCategory ({filter, items}){
             <div className={`${styles.ingridients} ml-4 mr-4`}>
             {
                 items.filter(item => item.type === filter).map((item, key)=>
-                    <Ingridient key={key} ingridient={item}/>
+                    <Ingridient key={item._id} ingridient={item} onIngridientClick={onIngridientClick}
+                    count={filter==="main" ? 1
+                    : key===0 && filter==="bun" ? 2
+                    : 0}/>
                 )
             }
             </div>
         </>
     )
-    }
+}

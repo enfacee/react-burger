@@ -1,0 +1,21 @@
+.app {
+  text-align: center;
+  height: 100vh;
+}
+.mainContainer {
+  max-height: Calc(100vh - 120px);
+  overflow: hidden;
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+}
+.box {
+  align-items: center;
+  width: 35%;
+}
+
+#react-modals {
+  position: relative;
+  z-index: 999;
+}
+
