@@ -2,7 +2,7 @@ import styles from "./ingridient-details.module.css"
 import {ingridientPropTypes}  from "../../utils/ingridient-prop-types"
 
 IngridientDetails.propTypes ={
-    ingridient: ingridientPropTypes
+    ingridient: ingridientPropTypes.isRequired
 };
 
 export default function IngridientDetails({ingridient}){
