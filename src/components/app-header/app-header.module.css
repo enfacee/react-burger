@@ -1,0 +1,30 @@
+.header {
+    height: 88px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
+}
+.container {
+    width: 30%;
+    display: flex;
+}
+.left {
+    composes: container;
+}
+
+.middle {
+    composes: container;
+    justify-content: center;
+}
+
+.right {
+    composes: container;
+    justify-content: flex-end;
+}
+
+.button {
+    border-radius: 5vh;
+    display: flex;
+    align-items: center;
+}

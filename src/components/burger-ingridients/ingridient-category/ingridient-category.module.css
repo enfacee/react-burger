@@ -1,0 +1,7 @@
+.ingridients {
+    display: flex;
+    flex-wrap: wrap;
+    flex-basis: content;
+    column-gap: 24px;
+    row-gap: 32px;
+}
