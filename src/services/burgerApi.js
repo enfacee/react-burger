@@ -13,12 +13,21 @@ export const burgerApi = createApi({
     }),
     endpoints(build) {
         return {
-            getIngridients: build.query({
+            getIngredients: build.query({
                 query: () => "/ingredients",
                 transformResponse: (response) => response.data,
-            })
+            }),
+            sendOrder: build.mutation({
+                query: (ingredients) => ({
+                    url: "/orders",
+                    method: "POST",
+                    body: JSON.stringify({
+                        ingredients: ingredients
+                    })
+                }),
+            }),
         }
     }
 })
 
-export const { useGetIngridientsQuery } = burgerApi;
+export const { useGetIngredientsQuery, useSendOrderMutation } = burgerApi;

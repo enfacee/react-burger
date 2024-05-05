@@ -1,8 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { burgerApi } from './burgerApi'
 
 const initialState = {
-  ingridientDetails: null,
-  showedDetailsModal: false
+  ingredientDetails: null,
+  showedDetailsModal: false,
+  showOrderModal: false,
+  orderInfo: null
 }
 
 export const modalSlice = createSlice({
@@ -10,14 +13,30 @@ export const modalSlice = createSlice({
   initialState,
   reducers: {
     showInfo: (state, action) => {
-        state.ingridientDetails = action.payload
+        state.ingredientDetails = action.payload
         state.showedDetailsModal = true
     },
     closeModal: (state) => {
-        state.ingridientDetails = null
+        state.ingredientDetails = null
         state.showedDetailsModal = false
+        state.showOrderModal = false
+        state.orderInfo = null
     },
   },
+  extraReducers: (builder) => {
+    builder.addMatcher(
+      burgerApi.endpoints.getIngridients.matchFulfilled,
+      (state, {payload}) => {
+
+      }
+    )
+    builder.addMatcher(burgerApi.endpoints.sendOrder.matchFulfilled,
+      (state, {payload})=> {
+          state.showOrderModal = true
+          state.orderInfo = payload
+      }
+    )
+  }
 })
 
 export const { showInfo, closeModal } = modalSlice.actions;

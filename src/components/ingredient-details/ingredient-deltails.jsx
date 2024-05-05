@@ -1,30 +1,30 @@
-import styles from "./ingridient-details.module.css"
+import styles from "./ingredient-details.module.css"
 import { useSelector } from "react-redux";
 
-export default function IngridientDetails(){
+export default function IngredientDetails(){
     
-    const {ingridientDetails: ingridient} = useSelector(state=> state.modal)
+    const {ingredientDetails: ingredient} = useSelector(state=> state.modal)
 
     return (
         <div className={styles.content}>
-            <img src={ingridient.image_large} alt='Изображение ингридиента'/>
-            <p className="text text_type_main-medium mt-4 mb-8">{ingridient.name}</p>
+            <img src={ingredient.image_large} alt='Изображение ингридиента'/>
+            <p className="text text_type_main-medium mt-4 mb-8">{ingredient.name}</p>
             <div className={`${styles.items} text text_type_main-default text_color_inactive`}>
                 <div>
                     <p>Каллории, ккал</p>
-                    <p>{ingridient.calories}</p>
+                    <p>{ingredient.calories}</p>
                 </div>
                 <div>
                     <p>Белки, г</p>
-                    <p>{ingridient.proteins}</p>
+                    <p>{ingredient.proteins}</p>
                 </div>
                 <div>
                     <p>Жиры, г</p>
-                    <p>{ingridient.fat}</p>
+                    <p>{ingredient.fat}</p>
                 </div>
                 <div>
                     <p>Углеводы, г</p>
-                    <p>{ingridient.carbohydrates}</p>
+                    <p>{ingredient.carbohydrates}</p>
                 </div>
             </div>
             </div>
