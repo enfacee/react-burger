@@ -1,6 +1,6 @@
 import styles from "./modal.module.css"
 import ModalOverlay from "../modal-overlay/modal-overlay"
-import IngridientDetails from '../ingredient-details/ingredient-deltails';
+import IngredientDetails from '../ingredient-details/ingredient-deltails';
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { createPortal } from "react-dom";
 import { useEffect } from "react";
@@ -41,7 +41,7 @@ export default function Modal(){
                         <p className="text text_type_main-large">{'Детали ингридиента'}</p>
                         <CloseIcon type="primary" onClick={handleCloseModal}/>
                     </div>
-                    {showedDetailsModal ? <IngridientDetails/> : <OrderDetails/>}
+                    {showedDetailsModal ? <IngredientDetails/> : <OrderDetails/>}
                 </div>
             </ModalOverlay>)
         ),

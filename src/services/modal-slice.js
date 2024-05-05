@@ -25,7 +25,7 @@ export const modalSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addMatcher(
-      burgerApi.endpoints.getIngridients.matchFulfilled,
+      burgerApi.endpoints.getIngredients.matchFulfilled,
       (state, {payload}) => {
 
       }

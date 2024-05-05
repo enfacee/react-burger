@@ -3,7 +3,7 @@ import { useState } from "react";
 import styles from './burger-ingredients.module.css';
 import IngredientsCategory from "./ingredient-category/ingredient-category";
 
-function BurgerIngridients(){
+function BurgerIngredients(){
 
     const [categories,] = useState([{
         key: 'buns',
@@ -42,4 +42,4 @@ function BurgerIngridients(){
     );
 }
 
-export default BurgerIngridients;
+export default BurgerIngredients;

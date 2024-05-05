@@ -18,12 +18,12 @@ const initialState = {
                 state.ingredients.push(action.payload)
                 state.showedDetailsModal = false
             },
-            prepare: (ingridient) => {
-                return { payload: { ...ingridient, key: nanoid() }}
+            prepare: (ingredient) => {
+                return { payload: { ...ingredient, key: nanoid() }}
             }
         },
         removeIngredient: (state, action) => {
-            state.ingredients = state.ingredients.filter(ingridient => ingridient.key !== action.payload)
+            state.ingredients = state.ingredients.filter(ingredient => ingredient.key !== action.payload)
         },
         moveIngredient: (state, action) => {
 

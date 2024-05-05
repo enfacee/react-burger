@@ -38,11 +38,6 @@ Bun.propTypes = {
     bun: ingredientPropTypes,
     isTop: PropTypes.bool
 };
-
-// BurgerContructor.propTypes = {
-//     items: PropTypes.arrayOf(ingridientPropTypes).isRequired,
-//     openModal: PropTypes.func.isRequired
-// };
 export default function BurgerContructor(){
 
     const { bun, ingredients } = useSelector(state => state.burgerContructor);
