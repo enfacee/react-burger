@@ -1,25 +1,29 @@
 import styles from "./modal.module.css"
 import ModalOverlay from "../modal-overlay/modal-overlay"
-import PropTypes from "prop-types"
+import IngridientDetails from '../ingridient-details/ingridient-deltails';
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { createPortal } from "react-dom";
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { closeModal } from "../../services/modal-slice";
 
 const modalRoot = document.getElementById("react-modals");
 
-Modal.propTypes = {
-    header: PropTypes.string,
-    closeModal: PropTypes.func.isRequired,
-    children: PropTypes.element.isRequired,
-}
-export default function Modal({children, header, closeModal}){
+export default function Modal(){
+
+    const {showedDetailsModal } = useSelector(state=> state.modal);
+    const dispatch = useDispatch();
+
     function handleOnClick(e){
         e.stopPropagation();
+    }
+    function handleCloseModal(){
+        dispatch(closeModal());
     }
     useEffect(()=>{
         const handleEscapePress = (e)=>{
             if(e.key==='Escape'){
-                closeModal();
+                handleCloseModal();
             }
         }
         window.addEventListener('keydown', handleEscapePress);
@@ -27,19 +31,19 @@ export default function Modal({children, header, closeModal}){
         return ()=>{
             window.removeEventListener('keydown', handleEscapePress);
         }
-    }, [closeModal]);
-    return (createPortal(
+    }, [showedDetailsModal]);
+    return (showedDetailsModal ? createPortal(
         (
-            <ModalOverlay closeModal={closeModal}>
+             (<ModalOverlay closeModal={handleCloseModal}>
                 <div className={`${styles.modal} p-10`} onClick={handleOnClick}>
                     <div className={`${styles.header}`}>
-                        <p className="text text_type_main-large">{header}</p>
-                        <CloseIcon type="primary" onClick={closeModal}/>
+                        <p className="text text_type_main-large">{'Детали ингридиента'}</p>
+                        <CloseIcon type="primary" onClick={handleCloseModal}/>
                     </div>
-                    {children}
+                    <IngridientDetails/>
                 </div>
-            </ModalOverlay>
+            </ModalOverlay>)
         ),
-        modalRoot)
+        modalRoot) : null
     )
 }

@@ -1,29 +1,32 @@
 import Ingridient from '../ingridient/ingridient'
 import styles from './ingridient-category.module.css'
 import PropTypes from 'prop-types'
-import {ingridientPropTypes} from '../../../utils/ingridient-prop-types'
+import { useMemo } from 'react'
+import { useGetIngridientsQuery } from "../../../services/burgerApi"
 
 IngridientsCategory.propTypes = {
-    items: PropTypes.arrayOf(ingridientPropTypes).isRequired,
-    onIngridientClick: PropTypes.func.isRequired,
-    filter: PropTypes.oneOf(['bun', 'sauce', 'main']).isRequired
+    category: PropTypes.shape({
+            key: PropTypes.string.isRequired,
+            name: PropTypes.string.isRequired,
+            filter: PropTypes.string.isRequired,
+        }).isRequired
 }
-export default function IngridientsCategory ({filter, items, onIngridientClick}){
+export default function IngridientsCategory ({category}){
+    
+    const { data, isLoading } = useGetIngridientsQuery();
+
+    const filtered = useMemo(()=> !isLoading ? data.filter(item => item.type === category.filter) : null,
+        [data, isLoading]);
+
     return (
         <>
             <h2 className="text text_type_main-medium mt-10 mb-6">
-                {filter === 'bun' ?
-                "Булки":filter==='sauce' ?
-                    "Соусы" : "Начинки"}
+                {category.name}
             </h2>
             <div className={`${styles.ingridients} ml-4 mr-4`}>
             {
-                items.filter(item => item.type === filter).map((item, key)=>
-                    <Ingridient key={item._id} ingridient={item} onIngridientClick={onIngridientClick}
-                    count={filter==="main" ? 1
-                    : key===0 && filter==="bun" ? 2
-                    : 0}/>
-                )
+                !isLoading ? filtered.map((item)=>
+                    <Ingridient key={item._id} ingridient={item} count={item.count}/>) : null
             }
             </div>
         </>

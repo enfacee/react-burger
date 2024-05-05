@@ -1,18 +1,22 @@
 import styles from './ingridient.module.css';
 import Price from "../../price/price";
 import PropTypes from 'prop-types'
+import { useDispatch } from "react-redux";
+import { showInfo } from "../../../services/modal-slice";
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import {ingridientPropTypes}  from "../../../utils/ingridient-prop-types"
 
 
 Ingridient.propTypes = {
     ingridient: ingridientPropTypes.isRequired,
-    onIngridientClick: PropTypes.func.isRequired,
     count: PropTypes.number
 }
-export default function Ingridient({ingridient, onIngridientClick, count = 0}){
+export default function Ingridient({ingridient, count = 0}){
+
+    const dispatch = useDispatch();
+
     function onItemClick(){
-        onIngridientClick(ingridient);
+        dispatch(showInfo(ingridient));
     }
     return(
         <div className={styles.ingridient} onClick={onItemClick}>

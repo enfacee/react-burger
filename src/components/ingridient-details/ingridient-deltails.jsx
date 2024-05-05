@@ -1,11 +1,10 @@
 import styles from "./ingridient-details.module.css"
-import {ingridientPropTypes}  from "../../utils/ingridient-prop-types"
+import { useSelector } from "react-redux";
 
-IngridientDetails.propTypes ={
-    ingridient: ingridientPropTypes.isRequired
-};
+export default function IngridientDetails(){
+    
+    const {ingridientDetails: ingridient} = useSelector(state=> state.modal)
 
-export default function IngridientDetails({ingridient}){
     return (
         <div className={styles.content}>
             <img src={ingridient.image_large} alt='Изображение ингридиента'/>
