@@ -38,7 +38,7 @@ export default function Modal(){
              (<ModalOverlay closeModal={handleCloseModal}>
                 <div className={`${styles.modal} p-10`} onClick={handleOnClick}>
                     <div className={`${styles.header}`}>
-                        <p className="text text_type_main-large">{'Детали ингридиента'}</p>
+                        <p className="text text_type_main-large">{showedDetailsModal?'Детали ингридиента':null}</p>
                         <CloseIcon type="primary" onClick={handleCloseModal}/>
                     </div>
                     {showedDetailsModal ? <IngredientDetails/> : <OrderDetails/>}

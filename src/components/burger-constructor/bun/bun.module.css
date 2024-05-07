@@ -1,0 +1,11 @@
+.bun {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-right: 20px;
+}
+.emptyBun {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

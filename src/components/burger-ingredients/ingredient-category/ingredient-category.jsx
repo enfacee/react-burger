@@ -9,6 +9,7 @@ IngredientsCategory.propTypes = {
             key: PropTypes.string.isRequired,
             name: PropTypes.string.isRequired,
             filter: PropTypes.string.isRequired,
+            ref: PropTypes.shape({ current: PropTypes.instanceOf(Element) })
         }).isRequired
 }
 export default function IngredientsCategory ({category}){
@@ -16,11 +17,11 @@ export default function IngredientsCategory ({category}){
     const { data, isLoading } = useGetIngredientsQuery();
 
     const filtered = useMemo(()=> !isLoading ? data.filter(item => item.type === category.filter) : null,
-        [data, isLoading]);
+        [data, isLoading, category.filter]);
 
     return (
         <>
-            <h2 className="text text_type_main-medium mt-10 mb-6">
+            <h2 className="text text_type_main-medium mt-10 mb-6" ref={category.ref}>
                 {category.name}
             </h2>
             <div className={`${styles.ingredients} ml-4 mr-4`}>

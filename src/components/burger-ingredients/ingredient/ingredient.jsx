@@ -9,8 +9,7 @@ import { useMemo } from 'react';
 
 
 Ingredient.propTypes = {
-    ingredient: ingredientPropTypes.isRequired,
-    // count: PropTypes.number
+    ingredient: ingredientPropTypes.isRequired
 }
 export default function Ingredient({ingredient}){
 
