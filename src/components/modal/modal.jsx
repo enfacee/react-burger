@@ -1,25 +1,28 @@
 import styles from "./modal.module.css"
 import ModalOverlay from "../modal-overlay/modal-overlay"
-import IngredientDetails from '../ingredient-details/ingredient-deltails';
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { createPortal } from "react-dom";
+import PropTypes from "prop-types"
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { closeModal } from "../../services/modal-slice";
-import OrderDetails from "../order-details/order-details";
 
 const modalRoot = document.getElementById("react-modals");
 
-export default function Modal(){
+Modal.propTypes = {
+    header: PropTypes.string,
+    children: PropTypes.element.isRequired,
+}
 
-    const { showedDetailsModal, showOrderModal } = useSelector(state=> state.modal);
+export default function Modal({children, header}){
+
     const dispatch = useDispatch();
+    function handleCloseModal(){
+        dispatch(closeModal());
+    }
 
     function handleOnClick(e){
         e.stopPropagation();
-    }
-    function handleCloseModal(){
-        dispatch(closeModal());
     }
     useEffect(()=>{
         const handleEscapePress = (e)=>{
@@ -32,19 +35,20 @@ export default function Modal(){
         return ()=>{
             window.removeEventListener('keydown', handleEscapePress);
         }
-    }, [showedDetailsModal]);
-    return (showedDetailsModal || showOrderModal ? createPortal(
+    // eslint-disable-next-line
+    }, []);
+    return (createPortal(
         (
              (<ModalOverlay closeModal={handleCloseModal}>
                 <div className={`${styles.modal} p-10`} onClick={handleOnClick}>
                     <div className={`${styles.header}`}>
-                        <p className="text text_type_main-large">{showedDetailsModal?'Детали ингридиента':null}</p>
+                        <p className="text text_type_main-large">{header}</p>
                         <CloseIcon type="primary" onClick={handleCloseModal}/>
                     </div>
-                    {showedDetailsModal ? <IngredientDetails/> : <OrderDetails/>}
+                    {children}
                 </div>
             </ModalOverlay>)
         ),
-        modalRoot) : null
+        modalRoot)
     )
 }

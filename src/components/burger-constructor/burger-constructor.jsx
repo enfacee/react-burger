@@ -1,21 +1,22 @@
-import { Button, ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 import { useDrop } from "react-dnd";
 import styles from './burger-constructor.module.css';
 import Price from "../price/price";
-import PropTypes from 'prop-types';
-import { ingredientPropTypes }  from "../../utils/ingredient-prop-types"
-import { addBun, addIngredient, removeIngredient } from "../../services/burger-constructor-slice";
+import { addIngredient } from "../../services/burger-constructor-slice";
 import { useSendOrderMutation } from "../../services/burgerApi";
 import Bun from "./bun/bun";
 import BurgerIngredient from "./burger-ingredient/burger-ingredient";
+import OrderDetails from "../order-details/order-details";
+import Modal from "../modal/modal";
 
 
 
 export default function BurgerContructor(){
 
     const { bun, ingredients } = useSelector(state => state.burgerContructor);
+    const { showOrderModal } = useSelector(state=> state.modal);
     const dispatch = useDispatch();
     const [{isHover}, dropTarget] = useDrop({
         accept: 'ingredient',
@@ -31,7 +32,7 @@ export default function BurgerContructor(){
     }
     const [send] = useSendOrderMutation();
     const sendOrder = ()=>{
-        send([bun._id, ...ingredients.map(ingredient=>ingredient._id)])
+        send([bun._id, ...ingredients.map(ingredient=>ingredient._id), bun._id])
     }
     const totalPrice = useMemo(()=> {
         return ingredients.reduce((acc, {price})=>{
@@ -59,6 +60,10 @@ export default function BurgerContructor(){
                     Оформить заказ
                 </Button>
             </div>
+            {showOrderModal &&
+                <Modal>
+                    <OrderDetails/>
+                </Modal>}
         </div>
     );
 }
