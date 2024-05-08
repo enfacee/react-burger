@@ -1,4 +1,4 @@
-.main {
+.burgerContructor {
     height: Calc(100% - 100px);
     display: flex;
     flex-direction: column;
@@ -6,16 +6,23 @@
     align-items: center;
 }
 
-.container {
+.elementsContainer {
     overflow-y: scroll;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    align-items: center;
+    align-items: end;
+    min-height: 40px;
+    width: 100%;
 }
 
 .footer {
     justify-content: flex-end;
     gap: 40px;
     display: flex;
+}
+.emptyElement {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
