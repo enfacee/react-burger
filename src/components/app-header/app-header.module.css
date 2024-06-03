@@ -27,4 +27,6 @@
     border-radius: 5vh;
     display: flex;
     align-items: center;
+    color: inherit;
+    text-decoration: inherit;
 }

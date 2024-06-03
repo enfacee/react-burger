@@ -12,12 +12,15 @@ const modalRoot = document.getElementById("react-modals");
 Modal.propTypes = {
     header: PropTypes.string,
     children: PropTypes.element.isRequired,
+    onClose: PropTypes.func
 }
 
-export default function Modal({children, header}){
+export default function Modal({children, header, onClose}){
 
     const dispatch = useDispatch();
+        
     function handleCloseModal(){
+        onClose();
         dispatch(closeModal());
     }
 

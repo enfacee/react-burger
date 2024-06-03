@@ -1,11 +1,17 @@
+import { useParams } from "react-router-dom";
 import styles from "./ingredient-details.module.css"
-import { useSelector } from "react-redux";
+import { useGetIngredientsQuery } from "../../services/burgerApi";
+import { useMemo } from "react";
 
 export default function IngredientDetails(){
     
-    const {ingredientDetails: ingredient} = useSelector(state=> state.modal)
+    const { ingredientId } = useParams();
+    const { data, isLoading } = useGetIngredientsQuery();
+    const ingredient = useMemo(()=> !isLoading ? data.find(x => x._id === ingredientId) : null,
+        [data, isLoading, ingredientId]);
 
     return (
+        ingredient != null ?
         <div className={styles.content}>
             <img src={ingredient.image_large} alt='Изображение ингридиента'/>
             <p className="text text_type_main-medium mt-4 mb-8">{ingredient.name}</p>
@@ -27,6 +33,6 @@ export default function IngredientDetails(){
                     <p>{ingredient.carbohydrates}</p>
                 </div>
             </div>
-            </div>
+        </div> : null
     )
 };
