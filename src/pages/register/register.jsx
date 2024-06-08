@@ -1,15 +1,18 @@
 import { Input, Button, EmailInput, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from 'react-router-dom';
 import styles from './register.module.css'
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { register } from "../../services/actions/user";
-import { addFormInfo } from "../../services/reducers/user";
+import { useForm } from "../../hooks/useForm";
 
 export function RegisterPage(){
     const dispatch = useDispatch();
-    const {email, name, password} = useSelector((store) => store.user.form);
-    const onChange = e => 
-        dispatch(addFormInfo({key: e.target.name, value:e.target.value}));
+    const { values, handleChange } = useForm({
+        name: '',
+		email: '',
+		password: '',
+    })
+    const {email, name, password} = values;
     const onSubmit = e => {
         e.preventDefault();
         dispatch(register({email, password, name}));
@@ -19,9 +22,9 @@ export function RegisterPage(){
             <div className={`${styles.pageContainer} mt-10`}>
                 <div className="text text_type_main-medium mb-6">Регистрация</div>
                 <div className={styles.inputs}>
-                    <Input type={'text'} placeholder={'Имя'} value={name} name={'name'} onChange={onChange}/>
-                    <EmailInput value={email} name={'email'} onChange={onChange}/>
-                    <PasswordInput type={'password'} placeholder={'Пароль'} icon={'ShowIcon'} value={password} name={'password'} onChange={onChange}/>
+                    <Input type={'text'} placeholder={'Имя'} value={name} name={'name'} onChange={handleChange}/>
+                    <EmailInput value={email} name={'email'} onChange={handleChange}/>
+                    <PasswordInput type={'password'} placeholder={'Пароль'} icon={'ShowIcon'} value={password} name={'password'} onChange={handleChange}/>
                 </div>
                 <Button htmlType={'submit'} type={'primary'} extraClass='mb-20 mt-6'>Зарегистрироваться</Button>
                 <div className={'text text_type_main-small text_color_inactive'}>

@@ -19,7 +19,9 @@ export default function AppHeader(){
             </Link>
         </div>
         <div className={styles.middle}>
-            <Logo/>
+            <Link to='/'>
+                <Logo/>
+            </Link>
         </div>
         <div className={styles.right}>
             <Link to='/profile' className ={`${styles.button} p-5 ml-2 mt-4 mb-4`}>

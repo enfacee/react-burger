@@ -13,7 +13,7 @@ export const sendOrder = async (ingredients) => {
     }),
     headers :{
       "Content-Type": "application/json",
-			Authorization: localStorage.getItem('accessToken') || '',
+			Authorization: localStorage.getItem('accessToken'),
     }
   })
   return checkReponse(response);

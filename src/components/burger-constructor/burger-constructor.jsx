@@ -11,11 +11,14 @@ import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
 import { sendOrder } from "../../services/actions/order";
 import { clearOrder } from "../../services/reducers/order";
+import { useNavigate } from "react-router-dom";
 
 export default function BurgerContructor(){
     const { bun, ingredients } = useSelector(state => state.burgerContructor);
     const { loading, order } = useSelector(state=> state.order);
+    const { user } = useSelector(state => state.user);
     const dispatch = useDispatch();
+	const navigate = useNavigate();
     const [{isHover}, dropTarget] = useDrop({
         accept: 'ingredient',
         drop(item) {
@@ -29,6 +32,11 @@ export default function BurgerContructor(){
         "borderStyle":isHover ?"dotted":"none"
     }
     const createOrder = ()=>{
+		if (user === null) {
+			navigate('/login');
+			return;
+		}
+
         dispatch(sendOrder([bun._id, ...ingredients.map(ingredient=>ingredient._id), bun._id]))
     }
     const handleOrderClose = () => {
@@ -63,7 +71,7 @@ export default function BurgerContructor(){
             </div>
             {loading && 
 				<Modal>
-					<div className={`${styles.loading}`}>
+					<div className={styles.loading}>
 						<p className="text text_type_main-medium p-15">
 							Создание заказа...
 						</p>

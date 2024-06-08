@@ -1,15 +1,17 @@
 import { Button, EmailInput, PasswordInput  } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from 'react-router-dom';
 import styles from './login.module.css'
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { login } from "../../services/actions/user";
-import { addFormInfo } from "../../services/reducers/user";
+import { useForm } from "../../hooks/useForm";
 
 export function LoginPage(){
     const dispatch = useDispatch();
-    const {email, password} = useSelector(store => store.user.form);
-    const onChange = e => 
-        dispatch(addFormInfo({key: e.target.name, value:e.target.value}));
+    const { values, handleChange } = useForm({
+		email: '',
+		password: '',
+	});
+	const { email, password } = values;
     const onSubmit = e => {
         e.preventDefault();
         dispatch(login({email, password}));
@@ -19,8 +21,8 @@ export function LoginPage(){
             <div className={`${styles.pageContainer} mt-10`}>
                 <p className="text text_type_main-medium mb-6">Вход</p>
                 <div className={styles.inputs}>
-                    <EmailInput value={email} name={'email'} onChange={onChange}/>
-                    <PasswordInput type={'password'} placeholder={'Пароль'} icon={'ShowIcon'} value={password} name={'password'} onChange={onChange}/>
+                    <EmailInput value={email} name={'email'} onChange={handleChange}/>
+                    <PasswordInput type={'password'} placeholder={'Пароль'} icon={'ShowIcon'} value={password} name={'password'} onChange={handleChange}/>
                 </div>
                 <Button htmlType={'submit'} type={'primary'} extraClass='mb-20 mt-6'>Войти</Button>
                 <div className={'text text_type_main-small text_color_inactive'}>
