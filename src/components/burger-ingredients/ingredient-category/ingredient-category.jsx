@@ -2,7 +2,7 @@ import Ingredient from '../ingredient/ingredient'
 import styles from './ingredient-category.module.css'
 import PropTypes from 'prop-types'
 import { useMemo } from 'react'
-import { useGetIngredientsQuery } from "../../../services/burgerApi"
+import { useSelector } from 'react-redux'
 
 IngredientsCategory.propTypes = {
     category: PropTypes.shape({
@@ -14,10 +14,10 @@ IngredientsCategory.propTypes = {
 }
 export default function IngredientsCategory ({category}){
     
-    const { data, isLoading } = useGetIngredientsQuery();
+    const { ingredients, loading } = useSelector(state => state.ingredients);
 
-    const filtered = useMemo(()=> !isLoading ? data.filter(item => item.type === category.filter) : null,
-        [data, isLoading, category.filter]);
+    const filtered = useMemo(()=> !loading ? ingredients.filter(item => item.type === category.filter) : null,
+        [ingredients, loading, category.filter]);
 
     return (
         <>
@@ -26,7 +26,7 @@ export default function IngredientsCategory ({category}){
             </h2>
             <div className={`${styles.ingredients} ml-4 mr-4`}>
             {
-                !isLoading ? filtered.map((item)=>
+                !loading ? filtered.map((item)=>
                     <Ingredient key={item._id} ingredient={item}/>) : null
             }
             </div>

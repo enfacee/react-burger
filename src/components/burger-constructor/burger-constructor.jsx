@@ -4,19 +4,17 @@ import { useMemo } from "react";
 import { useDrop } from "react-dnd";
 import styles from './burger-constructor.module.css';
 import Price from "../price/price";
-import { addIngredient } from "../../services/burger-constructor-slice";
-import { useSendOrderMutation } from "../../services/burgerApi";
+import { addIngredient, clearConstructor } from "../../services/reducers/burger-constructor";
 import Bun from "./bun/bun";
 import BurgerIngredient from "./burger-ingredient/burger-ingredient";
 import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
-
-
+import { sendOrder } from "../../services/actions/order";
+import { clearOrder } from "../../services/reducers/order";
 
 export default function BurgerContructor(){
-
     const { bun, ingredients } = useSelector(state => state.burgerContructor);
-    const { showOrderModal } = useSelector(state=> state.modal);
+    const { loading, order } = useSelector(state=> state.order);
     const dispatch = useDispatch();
     const [{isHover}, dropTarget] = useDrop({
         accept: 'ingredient',
@@ -30,9 +28,12 @@ export default function BurgerContructor(){
     const style = {        
         "borderStyle":isHover ?"dotted":"none"
     }
-    const [send] = useSendOrderMutation();
-    const sendOrder = ()=>{
-        send([bun._id, ...ingredients.map(ingredient=>ingredient._id), bun._id])
+    const createOrder = ()=>{
+        dispatch(sendOrder([bun._id, ...ingredients.map(ingredient=>ingredient._id), bun._id]))
+    }
+    const handleOrderClose = () => {
+        dispatch(clearOrder());
+        dispatch(clearConstructor());
     }
     const totalPrice = useMemo(()=> {
         return ingredients.reduce((acc, {price})=>{
@@ -56,14 +57,24 @@ export default function BurgerContructor(){
                 <Price price={totalPrice} size={"medium"}/>
                 <Button htmlType="button" type="primary" size="large" 
                 disabled ={!bun || !ingredients.length }
-                onClick={sendOrder}>
+                onClick={createOrder}>
                     Оформить заказ
                 </Button>
             </div>
-            {showOrderModal &&
-                <Modal>
+            {loading && 
+				<Modal>
+					<div className={`${styles.loading}`}>
+						<p className="text text_type_main-medium p-15">
+							Создание заказа...
+						</p>
+					</div>
+				</Modal>
+			}
+            {order && 
+                <Modal onClose={handleOrderClose}>
                     <OrderDetails/>
-                </Modal>}
+                </Modal>
+            }
         </div>
     );
 }

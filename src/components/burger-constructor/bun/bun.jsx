@@ -4,7 +4,7 @@ import { useDrop } from "react-dnd";
 import styles from './bun.module.css';
 import PropTypes from 'prop-types';
 import { ingredientPropTypes }  from "../../../utils/ingredient-prop-types"
-import { addBun } from "../../../services/burger-constructor-slice";
+import { addBun } from "../../../services/reducers/burger-constructor";
 
 
 export default function Bun({bun, type}){

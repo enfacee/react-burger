@@ -1,6 +1,4 @@
 import { createSlice, nanoid } from '@reduxjs/toolkit'
-import { burgerApi } from './burgerApi'
-
 
 const initialState = {
     bun: null,
@@ -28,16 +26,12 @@ const initialState = {
         },
         moveIngredient: (state, action) => {
             state.ingredients.splice(action.payload.hoverIndex, 0, state.ingredients.splice(action.payload.dragIndex, 1)[0]);
-        }
-    },
-    extraReducers: (builder) => {
-      builder.addMatcher(burgerApi.endpoints.sendOrder.matchFulfilled,
-        (state)=> {
+        },
+        clearConstructor:(state) => {
             state.ingredients = []
             state.bun = null
-        }
-      )
-    }
+        },
+    },
   })
   
-  export const { addBun, addIngredient, removeIngredient, moveIngredient } = burgerContructorSlice.actions;
+  export const { addBun, addIngredient, removeIngredient, moveIngredient, clearConstructor } = burgerContructorSlice.actions;

@@ -1,11 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { reducer } from './reducer'; 
-import { burgerApi } from './burgerApi';
+import { reducer } from './reducers/reducer'; 
 
 
 export const store = configureStore({
     reducer,
     middleware: (getDefaultMiddleware) => {
-        return getDefaultMiddleware().concat(burgerApi.middleware);
+        return getDefaultMiddleware();
     },
   })
