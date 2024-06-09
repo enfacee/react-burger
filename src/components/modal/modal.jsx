@@ -4,23 +4,19 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { createPortal } from "react-dom";
 import PropTypes from "prop-types"
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { closeModal } from "../../services/modal-slice";
 
 const modalRoot = document.getElementById("react-modals");
 
 Modal.propTypes = {
     header: PropTypes.string,
     children: PropTypes.element.isRequired,
+    onClose: PropTypes.func
 }
 
-export default function Modal({children, header}){
-
-    const dispatch = useDispatch();
+export default function Modal({children, header, onClose}){        
     function handleCloseModal(){
-        dispatch(closeModal());
+        onClose();
     }
-
     function handleOnClick(e){
         e.stopPropagation();
     }
@@ -43,7 +39,7 @@ export default function Modal({children, header}){
                 <div className={`${styles.modal} p-10`} onClick={handleOnClick}>
                     <div className={`${styles.header}`}>
                         <p className="text text_type_main-large">{header}</p>
-                        <CloseIcon type="primary" onClick={handleCloseModal}/>
+                        {onClose != null &&<CloseIcon type="primary" onClick={handleCloseModal}/>}
                     </div>
                     {children}
                 </div>

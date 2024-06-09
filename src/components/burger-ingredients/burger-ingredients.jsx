@@ -2,13 +2,9 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useRef, useState } from "react";
 import styles from './burger-ingredients.module.css';
 import IngredientsCategory from "./ingredient-category/ingredient-category";
-import { useSelector } from "react-redux";
-import Modal from "../modal/modal";
-import IngredientDetails from "../ingredient-details/ingredient-deltails";
 
 function BurgerIngredients(){
 
-    const { showedDetailsModal } = useSelector(state=> state.modal);
     const tabsRef = useRef();
 
     const categories = [{
@@ -56,10 +52,6 @@ function BurgerIngredients(){
                     <IngredientsCategory key={category.key} category={category}/>)
             }
             </div>
-            {showedDetailsModal && 
-                <Modal header={'Детали ингридиента'}>
-                    <IngredientDetails/>
-                </Modal>}
         </main>
     );
 }

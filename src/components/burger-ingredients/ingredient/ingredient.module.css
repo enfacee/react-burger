@@ -1,4 +1,6 @@
 .ingredient {
     width: 45%;
     position: relative;
+    color: inherit;
+    text-decoration: inherit;
 }

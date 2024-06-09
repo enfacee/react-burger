@@ -5,7 +5,7 @@ import { useDrop, useDrag } from "react-dnd";
 import { useDispatch } from "react-redux";
 import PropTypes from 'prop-types';
 import { ingredientPropTypes }  from "../../../utils/ingredient-prop-types"
-import { moveIngredient, removeIngredient } from '../../../services/burger-constructor-slice';
+import { moveIngredient, removeIngredient } from '../../../services/reducers/burger-constructor';
 
 const typeName = 'element';
 
