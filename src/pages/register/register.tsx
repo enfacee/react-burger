@@ -14,7 +14,7 @@ export function RegisterPage(){
 		password: '',
     })
     const {email, name, password} = values;
-    const onSubmit = (e: FormEvent) => {
+    const onSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(register({email, password, name}));
     }

@@ -18,7 +18,7 @@ export function ForgotPasswordPage(){
 		dispatch(forgotPassword({email}));
 	}, [email, dispatch]);
 
-    const formOnSubmit = (e: FormEvent) => {
+    const formOnSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         resetPassword();
     }

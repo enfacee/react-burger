@@ -17,7 +17,7 @@ export function ResetPasswordPage(){
         token: '',
     })
     const { password, token } = values;
-    const formOnSubmit = (e: FormEvent) => {
+    const formOnSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(resetPassword({password, token}));
     }

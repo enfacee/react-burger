@@ -5,24 +5,23 @@ import { FormEvent, useCallback } from "react";
 import { changeUserInfo, logout } from "../../services/actions/user";
 import { useForm } from "../../hooks/useForm";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { TUser } from "../../types/ingredient";
 
 export function ProfilePage(){
 	const { pathname } = useLocation();
     const dispatch = useAppDispatch();
-    const { user } = useAppSelector(store => ({ user: store.user.user as TUser}));
+    const { user } = useAppSelector(store => store.user);
     const { values, setValues, handleChange } = useForm({
-        name: user.name,
-		email: user.email,
+        name: user!.name,
+		email: user!.email,
 		password: '',
     })
     const {email, name, password} = values;
     const reset = () => setValues({
-        name: user.name,
-        email: user.email,
+        name: user!.name,
+        email: user!.email,
         password: '',
     });
-    const formOnSubmit = (e: FormEvent) => {
+    const formOnSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(changeUserInfo({
             name,
@@ -31,7 +30,7 @@ export function ProfilePage(){
         }));
         reset();
     }
-    const isChangeUserInfo = user.name !== name || user.email !== email || password !== '';
+    const isChangeUserInfo = user!.name !== name || user!.email !== email || password !== '';
 	const onLogout = useCallback(() => {
 		dispatch(logout());
 	}, [dispatch]);

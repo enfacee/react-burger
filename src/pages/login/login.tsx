@@ -13,7 +13,7 @@ export function LoginPage(){
 		password: '',
 	});
 	const { email, password } = values;
-    const onSubmit = (e: FormEvent) => {
+    const onSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(login({email, password}));
     }
