@@ -1,29 +1,30 @@
 import styles from './ingredient.module.css';
 import Price from "../../price/price";
-import { useSelector } from "react-redux";
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import {ingredientPropTypes}  from "../../../utils/ingredient-prop-types"
 import { useDrag } from 'react-dnd';
 import { useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useAppSelector } from '../../../hooks/hooks';
+import { TIngredientResponse } from '../../../types/response';
 
 
-Ingredient.propTypes = {
-    ingredient: ingredientPropTypes.isRequired
+type TIngredientProps = {
+    ingredient: TIngredientResponse
 }
-export default function Ingredient({ingredient}){
+
+export default function Ingredient({ingredient}:TIngredientProps){
     const location = useLocation();
   
     const ingredientId = ingredient._id;
 
-    const [, dragRef] = useDrag({
+    const [, dragRef] = useDrag<TIngredientResponse, unknown, unknown>({
         type: ingredient.type !== 'bun' ? 'ingredient' : ingredient.type,
         item: ingredient,
         collect: monitor => ({
             isDrag: monitor.isDragging()
         })
     });
-    const { bun, ingredients} = useSelector(state=>state.burgerContructor);
+    const { bun, ingredients} = useAppSelector(state=>state.burgerContructor);
     var count = useMemo(()=>{
         return bun && bun._id === ingredient._id ? 2 : ingredients.filter(item=>item._id === ingredient._id).length;
         }, [bun, ingredient, ingredients])

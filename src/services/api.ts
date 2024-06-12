@@ -1,11 +1,15 @@
+import { RequestOptions, TForgotPasswordRequest, TLoginRequest, TRegisterRequest, TResetPasswordRequest } from "../types/request";
+import { ResponseType, TDataIngredientResponse, TLogoutResponse, TOrderResponse, TRefreshTokenResponse, TUserResponse } from "../types/response";
+import { checkReponse, request } from "../utils/commonApi";
+
 export const BASE_URL = 'https://norma.nomoreparties.space/api';
 export const USER_URL = `${BASE_URL}/auth/user`;
 
-export const getIngredients = () => {
-  return request(`${BASE_URL}/ingredients`);
+export const getIngredients = (): Promise<TDataIngredientResponse> => {
+  return request<TDataIngredientResponse>(`${BASE_URL}/ingredients`);
 }
 
-export const sendOrder = async (ingredients) => {
+export const sendOrder = async (ingredients: Array<string>) => {
   const response = await fetch(`${BASE_URL}/orders`,{
     method: 'POST',
     body: JSON.stringify({
@@ -13,15 +17,15 @@ export const sendOrder = async (ingredients) => {
     }),
     headers :{
       "Content-Type": "application/json",
-			Authorization: localStorage.getItem('accessToken'),
+			Authorization: localStorage.getItem('accessToken')! ,
     }
   })
-  return checkReponse(response);
+  return checkReponse<TOrderResponse>(response);
 }
 
-export const register = async (registerInfo) => {
+export const register = async (registerInfo: TRegisterRequest) => {
   try {
-    const response = await request(`${BASE_URL}/auth/register`, {
+    const response = await request<TUserResponse>(`${BASE_URL}/auth/register`, {
       method: 'POST',
       body: JSON.stringify(registerInfo)
     });
@@ -35,9 +39,9 @@ export const register = async (registerInfo) => {
   }
 }
 
-export const login = async (loginInfo) => {
+export const login = async (loginInfo: TLoginRequest) => {
   try {
-    const response = await request(`${BASE_URL}/auth/login`, {
+    const response = await request<TUserResponse>(`${BASE_URL}/auth/login`, {
       method: 'POST',
       body: JSON.stringify(loginInfo)
     });
@@ -55,7 +59,7 @@ export const logout = async () => {
   const body = JSON.stringify({
     token: localStorage.getItem('refreshToken')
   });
-  await request(`${BASE_URL}/auth/logout`, {
+  await request<TLogoutResponse>(`${BASE_URL}/auth/logout`, {
     method: 'POST',
     body: body
   });
@@ -63,7 +67,7 @@ export const logout = async () => {
   localStorage.removeItem('refreshToken');
 }
 
-export const forgotPassword = (passwordInfo) => {
+export const forgotPassword = (passwordInfo: TForgotPasswordRequest) => {
   const response = request(`${BASE_URL}/password-reset`, {
     method: 'POST',
     body: JSON.stringify(passwordInfo)
@@ -72,7 +76,7 @@ export const forgotPassword = (passwordInfo) => {
   return response;
 }
 
-export const resetPassword = (passwordInfo) => {
+export const resetPassword = (passwordInfo: TResetPasswordRequest) => {
   const response = request(`${BASE_URL}/password-reset/reset`, {
     method: 'POST',
     body: JSON.stringify(passwordInfo)
@@ -82,50 +86,29 @@ export const resetPassword = (passwordInfo) => {
 }
 
 export const getUser = async () => {
-  try {
-    const response = await fetchWithRefresh(USER_URL, {
+  const response = await fetchWithRefresh<TUserResponse>(USER_URL, {
       method: 'GET',
       headers: {
           'Content-Type': 'application/json',
-          Authorization: localStorage.getItem('accessToken'),
+          Authorization: localStorage.getItem('accessToken')!,
         },
     })
     return response;
-  } catch (error) {
-    return { error }
-  }
 }
 
-export const changeUserInfo = async (userInfo) => {
-  try {
-    const response = await fetchWithRefresh(USER_URL, {
+export const changeUserInfo = async (userInfo: TRegisterRequest) => {
+    const response = await fetchWithRefresh<TUserResponse>(USER_URL, {
       method: 'PATCH',
       headers: {
           'Content-Type': 'application/json',
-          Authorization: localStorage.getItem('accessToken'),
+          Authorization: localStorage.getItem('accessToken')!,
         },
       body: JSON.stringify(userInfo),
     })
     return response;
-  } catch (error) {
-    return { error }
-  }
 }
-const request = async (url, options) =>{
-  const response = await fetch(url,{
-    method: !options ? 'GET': options.method,
-    body: options?.body,
-    headers :{
-      "Content-Type": "application/json"
-    }
-  })
-  return checkReponse(response);
-}
-const checkReponse = (res) => {
-  return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
-};
   
-export const refreshToken = () => {
+export const refreshToken = () : Promise<TRefreshTokenResponse> => {
   return fetch(`${BASE_URL}/auth/token`, {
     method: 'POST',
     headers: {
@@ -135,7 +118,7 @@ export const refreshToken = () => {
       token: localStorage.getItem("refreshToken"),
     }),
   })
-  .then(checkReponse)
+  .then(checkReponse<TRefreshTokenResponse>)
   .then((refreshData) => {
     if (!refreshData.success) {
         return Promise.reject(refreshData);
@@ -146,14 +129,17 @@ export const refreshToken = () => {
   });
 };
 
-export const fetchWithRefresh = async (url, options) => {
+export const fetchWithRefresh = async <T extends ResponseType>(url: string, options: RequestOptions): Promise<T> => {
   try {
     const res = await fetch(url, options);
-    return await checkReponse(res);
+    return await checkReponse<T>(res);
   } catch (err) {
-    if (err.message === "jwt expired") {
+    if (err instanceof Error && err.message === "jwt expired") {
       const refreshData = await refreshToken(); //обновляем токен
-      options.headers.authorization = refreshData.accessToken;
+      options.headers = {
+        ...options.headers,
+        authorization: refreshData.accessToken
+      }
       const res = await fetch(url, options); //повторяем запрос
       return await checkReponse(res);
     } else {

@@ -1,11 +1,11 @@
 import { useLocation, useParams } from "react-router-dom";
 import styles from "./ingredient-details.module.css"
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../hooks/hooks";
 
 export default function IngredientDetails(){
     
     const { ingredientId } = useParams();    
-	const { success, ingredients } = useSelector((state) => state.ingredients);
+	const { success, ingredients } = useAppSelector((state) => state.ingredients);
     const ingredient = ingredients.find(x => x._id === ingredientId)
 	const location = useLocation();
 	const isInModal = location.state && location.state.background;

@@ -1,15 +1,16 @@
 import { Button, EmailInput, Input, PasswordInput  } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useLocation } from 'react-router-dom';
 import styles from './profile.module.css'
-import { useDispatch, useSelector } from "react-redux";
-import { useCallback } from "react";
+import { FormEvent, useCallback } from "react";
 import { changeUserInfo, logout } from "../../services/actions/user";
 import { useForm } from "../../hooks/useForm";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { TUser } from "../../types/ingredient";
 
 export function ProfilePage(){
 	const { pathname } = useLocation();
-    const dispatch = useDispatch();
-    const {user} = useSelector((store) => store.user);
+    const dispatch = useAppDispatch();
+    const { user } = useAppSelector(store => ({ user: store.user.user as TUser}));
     const { values, setValues, handleChange } = useForm({
         name: user.name,
 		email: user.email,
@@ -21,7 +22,7 @@ export function ProfilePage(){
         email: user.email,
         password: '',
     });
-    const formOnSubmit = e => {
+    const formOnSubmit = (e: FormEvent) => {
         e.preventDefault();
         dispatch(changeUserInfo({
             name,
@@ -50,9 +51,9 @@ export function ProfilePage(){
             </div>            
             <div className={styles.inputs}>
                 <form onSubmit={formOnSubmit}>
-                    <Input type={'text'} placeholder={'Имя'} icon={'EditIcon'} value={name} name={'name'} onChange={handleChange}/>
-                    <EmailInput placeholder={'email'} icon={'EditIcon'} value={email} name={'email'} onChange={handleChange} extraClass='mt-6'/>
-                    <PasswordInput type={'password'} placeholder={'Пароль'} icon={'EditIcon'} value={password} name={'password'} onChange={handleChange} extraClass='mt-6'/>
+                    <Input type={'text'} placeholder={'Имя'} icon={'EditIcon'} value={name} name={'name'} onChange={handleChange}	onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}/>
+                    <EmailInput placeholder={'email'} isIcon={true} value={email} name={'email'} onChange={handleChange} extraClass='mt-6'/>
+                    <PasswordInput placeholder={'Пароль'} icon={'EditIcon'} value={password} name={'password'} onChange={handleChange} extraClass='mt-6'/>
                     {
                         isChangeUserInfo && 
                         <>

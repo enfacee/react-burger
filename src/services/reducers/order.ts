@@ -1,7 +1,14 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { sendOrder } from '../actions/order';
+import { TOrderResponse } from '../../types/response';
 
-const initialState = {
+type TOrderState = {
+    loading: boolean;
+    success: boolean | null;
+    order: TOrderResponse | null;
+}
+
+const initialState: TOrderState = {
     loading: false,
     success: null,
     order: null,
@@ -27,7 +34,7 @@ export const orderSlice = createSlice({
                 state.success = false;
                 state.order = null;
             })
-            .addCase(sendOrder.fulfilled, (state, {payload}) => {
+            .addCase(sendOrder.fulfilled, (state, {payload}: PayloadAction<TOrderResponse>) => {
                 state.loading = false;
                 state.success = payload.success;
                 state.order = payload;

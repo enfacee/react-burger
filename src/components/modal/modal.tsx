@@ -2,26 +2,27 @@ import styles from "./modal.module.css"
 import ModalOverlay from "../modal-overlay/modal-overlay"
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { createPortal } from "react-dom";
-import PropTypes from "prop-types"
-import { useEffect } from "react";
+import { ReactNode, SyntheticEvent, useEffect } from "react";
 
-const modalRoot = document.getElementById("react-modals");
+const modalRoot = document.getElementById("react-modals")!;
 
-Modal.propTypes = {
-    header: PropTypes.string,
-    children: PropTypes.element.isRequired,
-    onClose: PropTypes.func
+type TModal = {
+    header?: string;
+    onClose?: () => void;
+    children: ReactNode;
 }
 
-export default function Modal({children, header, onClose}){        
+export default function Modal({children, header, onClose}: TModal){        
     function handleCloseModal(){
-        onClose();
+        if(!!onClose) {
+            onClose();
+        }
     }
-    function handleOnClick(e){
+    function handleOnClick(e: SyntheticEvent){
         e.stopPropagation();
     }
     useEffect(()=>{
-        const handleEscapePress = (e)=>{
+        const handleEscapePress = (e: KeyboardEvent)=>{
             if(e.key==='Escape'){
                 handleCloseModal();
             }

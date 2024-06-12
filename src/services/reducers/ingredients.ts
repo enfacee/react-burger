@@ -1,7 +1,14 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { getIngredients } from '../actions/ingredients'
+import { TIngredientResponse } from '../../types/response';
 
-const initialState = {
+type TIngredientState = {
+    loading: boolean;
+    success: boolean | null;
+    ingredients: Array<TIngredientResponse>
+}
+
+const initialState: TIngredientState = {
     loading: false,
     success: null,
     ingredients: []
@@ -11,15 +18,6 @@ export const ingredientsSlice = createSlice({
     name: 'ingredients',
     initialState,
     reducers: {
-        addBun: (state, action) => {
-            state.bun = action.payload
-        },
-        removeIngredient: (state, action) => {
-            state.ingredients = state.ingredients.filter(ingredient => ingredient.key !== action.payload)
-        },
-        moveIngredient: (state, action) => {
-            state.ingredients.splice(action.payload.hoverIndex, 0, state.ingredients.splice(action.payload.dragIndex, 1)[0]);
-        }
     },
     extraReducers: (builder) => {
         builder.addCase(getIngredients.pending, (state) => {
@@ -30,12 +28,10 @@ export const ingredientsSlice = createSlice({
                     state.success = false;
                     state.ingredients = [];
                 })
-                .addCase(getIngredients.fulfilled, (state, {payload}) => {
+                .addCase(getIngredients.fulfilled, (state, {payload}: PayloadAction<Array<TIngredientResponse>>) => {
                     state.loading = false;
                     state.success = true;
                     state.ingredients = payload;
                 })      
     }
 })
-  
-  export const { addBun, addIngredient, removeIngredient, moveIngredient } = ingredientsSlice.actions;
