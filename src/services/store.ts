@@ -8,3 +8,6 @@ export const store = configureStore({
         return getDefaultMiddleware();
     },
   })
+
+export type RooState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch;

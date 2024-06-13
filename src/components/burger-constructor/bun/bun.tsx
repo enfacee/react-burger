@@ -1,14 +1,16 @@
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch} from "react-redux";
 import { useDrop } from "react-dnd";
 import styles from './bun.module.css';
-import PropTypes from 'prop-types';
-import { ingredientPropTypes }  from "../../../utils/ingredient-prop-types"
 import { addBun } from "../../../services/reducers/burger-constructor";
+import { useAppDispatch } from "../../../hooks/hooks";
+import { TIngredientResponse } from "../../../types/response";
 
-
-export default function Bun({bun, type}){
-    const dispatch = useDispatch();
+type TBun = {
+    bun: TIngredientResponse | null;
+    type: 'top' | 'bottom';
+}
+export default function Bun({bun, type}: TBun){
+    const dispatch = useAppDispatch();
     const [{isHover}, dropTarget] = useDrop({
         accept: 'bun',
         drop(item) {
@@ -35,8 +37,4 @@ export default function Bun({bun, type}){
             }
         </div>
     )
-};
-Bun.propTypes = {
-    bun: ingredientPropTypes,
-    type: PropTypes.string.isRequired
 };

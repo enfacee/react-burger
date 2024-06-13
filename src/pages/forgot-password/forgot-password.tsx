@@ -1,13 +1,13 @@
 import { Button, EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, Navigate } from 'react-router-dom';
 import styles from './forgot-password.module.css'
-import { useDispatch } from "react-redux";
 import { forgotPassword } from "../../services/actions/user";
-import { useCallback, useEffect } from "react";
+import { FormEvent, useCallback, useEffect } from "react";
 import { useForm } from "../../hooks/useForm";
+import { useAppDispatch } from "../../hooks/hooks";
 
 export function ForgotPasswordPage(){
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const { values, handleChange } = useForm({email: ''})
     const { email } = values;
 	useEffect(() => {
@@ -18,7 +18,7 @@ export function ForgotPasswordPage(){
 		dispatch(forgotPassword({email}));
 	}, [email, dispatch]);
 
-    const formOnSubmit = e => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         resetPassword();
     }
@@ -29,7 +29,7 @@ export function ForgotPasswordPage(){
 		);
 	}
     return (
-        <form onSubmit={formOnSubmit}>
+        <form onSubmit={handleSubmit}>
             <div className={`${styles.pageContainer} mt-10`}>
                 <div className="text text_type_main-medium mb-6">Восстановление пароля</div>
                 <div className={styles.inputs}>

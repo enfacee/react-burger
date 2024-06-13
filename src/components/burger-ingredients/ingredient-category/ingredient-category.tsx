@@ -1,20 +1,22 @@
 import Ingredient from '../ingredient/ingredient'
 import styles from './ingredient-category.module.css'
-import PropTypes from 'prop-types'
-import { useMemo } from 'react'
-import { useSelector } from 'react-redux'
+import { MutableRefObject, useMemo } from 'react'
+import { useAppSelector } from '../../../hooks/hooks'
 
-IngredientsCategory.propTypes = {
-    category: PropTypes.shape({
-            key: PropTypes.string.isRequired,
-            name: PropTypes.string.isRequired,
-            filter: PropTypes.string.isRequired,
-            ref: PropTypes.shape({ current: PropTypes.instanceOf(Element) })
-        }).isRequired
+type TIngredientsCategory = {
+    category: TCategory;
 }
-export default function IngredientsCategory ({category}){
+
+type TCategory = {
+    key: string;
+    name: string;
+    filter: string;
+    ref: MutableRefObject<HTMLDivElement | null>;
+}
+
+export default function IngredientsCategory ({category}:TIngredientsCategory){
     
-    const { ingredients, loading } = useSelector(state => state.ingredients);
+    const { ingredients, loading } = useAppSelector(state => state.ingredients);
 
     const filtered = useMemo(()=> !loading ? ingredients.filter(item => item.type === category.filter) : null,
         [ingredients, loading, category.filter]);
@@ -26,7 +28,7 @@ export default function IngredientsCategory ({category}){
             </h2>
             <div className={`${styles.ingredients} ml-4 mr-4`}>
             {
-                !loading ? filtered.map((item)=>
+                !loading ? filtered!.map((item)=>
                     <Ingredient key={item._id} ingredient={item}/>) : null
             }
             </div>

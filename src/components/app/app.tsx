@@ -5,21 +5,21 @@ import { HomePage, LoginPage, RegisterPage, ResetPasswordPage, ForgotPasswordPag
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-deltails';
 import { OnlyAuth, OnlyUnAuth } from '../protected-route';
-import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getUser } from '../../services/actions/user';
 import { getIngredients } from '../../services/actions/ingredients';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 
 export default function App() {
   const location = useLocation();
   const navigate = useNavigate();
   const background = location.state && location.state.background;
-  const { loading } = useSelector(state => state.ingredients);
-  const { isUserAuth } = useSelector(state => state.user);
+  const { loading } = useAppSelector(state => state.ingredients);
+  const { isUserAuth } = useAppSelector(state => state.user);
   const handleModalClose = () => {
     navigate(-1);
   };
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(getUser());

@@ -1,7 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { changeUserInfo, forgotPassword, getUser, login, logout, register, resetPassword } from '../actions/user';
+import { TUser } from '../../types/ingredient';
 
-const initialState = {
+type TUserState = {
+	user: TUser | null;
+	isUserAuth: boolean;
+	passwordChanged: boolean;
+    tokenSent: boolean;
+};
+const initialState : TUserState = {
     user: null,
     isUserAuth: false,
     passwordChanged: false,
@@ -10,6 +17,9 @@ const initialState = {
   export const userSlice = createSlice({
     name: 'user',
     initialState,
+    reducers :{
+
+    },
     extraReducers: (builder) => {
       builder
         .addCase(getUser.pending, (state) => {
@@ -45,4 +55,3 @@ const initialState = {
         });
     }
   })
-  export const { addFormInfo, resetUserInfo, resetToken } = userSlice.actions;

@@ -1,5 +1,4 @@
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
 import { useMemo } from "react";
 import { useDrop } from "react-dnd";
 import styles from './burger-constructor.module.css';
@@ -12,14 +11,20 @@ import Modal from "../modal/modal";
 import { sendOrder } from "../../services/actions/order";
 import { clearOrder } from "../../services/reducers/order";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { TIngredient } from "../../types/ingredient";
+
+type TDropObject = {
+    isHover: boolean;
+}
 
 export default function BurgerContructor(){
-    const { bun, ingredients } = useSelector(state => state.burgerContructor);
-    const { loading, order } = useSelector(state=> state.order);
-    const { user } = useSelector(state => state.user);
-    const dispatch = useDispatch();
+    const { bun, ingredients } = useAppSelector(state => state.burgerContructor);
+    const { loading, order } = useAppSelector(state=> state.order);
+    const { user } = useAppSelector(state => state.user);
+    const dispatch = useAppDispatch();
 	const navigate = useNavigate();
-    const [{isHover}, dropTarget] = useDrop({
+    const [{isHover}, dropTarget] = useDrop<TIngredient, unknown, TDropObject>({
         accept: 'ingredient',
         drop(item) {
             dispatch(addIngredient(item));
@@ -37,7 +42,7 @@ export default function BurgerContructor(){
 			return;
 		}
 
-        dispatch(sendOrder([bun._id, ...ingredients.map(ingredient=>ingredient._id), bun._id]))
+        dispatch(sendOrder([bun!._id, ...ingredients.map(ingredient=>ingredient._id), bun!._id]))
     }
     const handleOrderClose = () => {
         dispatch(clearOrder());

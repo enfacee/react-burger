@@ -1,27 +1,27 @@
 import { Button, EmailInput, Input, PasswordInput  } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useLocation } from 'react-router-dom';
 import styles from './profile.module.css'
-import { useDispatch, useSelector } from "react-redux";
-import { useCallback } from "react";
+import { FormEvent, useCallback } from "react";
 import { changeUserInfo, logout } from "../../services/actions/user";
 import { useForm } from "../../hooks/useForm";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 
 export function ProfilePage(){
 	const { pathname } = useLocation();
-    const dispatch = useDispatch();
-    const {user} = useSelector((store) => store.user);
+    const dispatch = useAppDispatch();
+    const { user } = useAppSelector(store => store.user);
     const { values, setValues, handleChange } = useForm({
-        name: user.name,
-		email: user.email,
+        name: user!.name,
+		email: user!.email,
 		password: '',
     })
     const {email, name, password} = values;
     const reset = () => setValues({
-        name: user.name,
-        email: user.email,
+        name: user!.name,
+        email: user!.email,
         password: '',
     });
-    const formOnSubmit = e => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(changeUserInfo({
             name,
@@ -30,7 +30,7 @@ export function ProfilePage(){
         }));
         reset();
     }
-    const isChangeUserInfo = user.name !== name || user.email !== email || password !== '';
+    const isChangeUserInfo = user!.name !== name || user!.email !== email || password !== '';
 	const onLogout = useCallback(() => {
 		dispatch(logout());
 	}, [dispatch]);
@@ -49,10 +49,10 @@ export function ProfilePage(){
                 <div className="text text_type_main-default text_color_inactive mt-20">В этом разделе вы можете изменить свои персональные данные</div>
             </div>            
             <div className={styles.inputs}>
-                <form onSubmit={formOnSubmit}>
-                    <Input type={'text'} placeholder={'Имя'} icon={'EditIcon'} value={name} name={'name'} onChange={handleChange}/>
-                    <EmailInput placeholder={'email'} icon={'EditIcon'} value={email} name={'email'} onChange={handleChange} extraClass='mt-6'/>
-                    <PasswordInput type={'password'} placeholder={'Пароль'} icon={'EditIcon'} value={password} name={'password'} onChange={handleChange} extraClass='mt-6'/>
+                <form onSubmit={handleSubmit}>
+                    <Input type={'text'} placeholder={'Имя'} icon={'EditIcon'} value={name} name={'name'} onChange={handleChange}	onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}/>
+                    <EmailInput placeholder={'email'} isIcon={true} value={email} name={'email'} onChange={handleChange} extraClass='mt-6'/>
+                    <PasswordInput placeholder={'Пароль'} icon={'EditIcon'} value={password} name={'password'} onChange={handleChange} extraClass='mt-6'/>
                     {
                         isChangeUserInfo && 
                         <>

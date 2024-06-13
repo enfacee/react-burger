@@ -5,32 +5,32 @@ import IngredientsCategory from "./ingredient-category/ingredient-category";
 
 function BurgerIngredients(){
 
-    const tabsRef = useRef();
+    const tabsRef = useRef<HTMLDivElement | null>(null);
 
     const categories = [{
         key: 'buns',
         name: 'Булки',
         filter: 'bun',
-        ref: useRef()
+        ref: useRef<HTMLDivElement | null>(null)
     },{
         key: 'stuffing',
         name: 'Начинки',
         filter: 'main',
-        ref: useRef()
+        ref: useRef<HTMLDivElement | null>(null)
     },{
         key: 'sauces',
         name: 'Соусы',
         filter: 'sauce',
-        ref: useRef()
+        ref: useRef<HTMLDivElement | null>(null)
     }];
 
     const [currentTab, setCurrentTab] = useState('buns')
     function onScrollHandle(){
-        const tabBottom = tabsRef.current.getBoundingClientRect().bottom;
+        const tabBottom = tabsRef.current!.getBoundingClientRect().bottom;
         const minTabToCategory = categories.map(cat=>{
             return {
                 key: cat.key,
-                height: Math.abs(cat.ref.current.getBoundingClientRect().top - tabBottom)
+                height: Math.abs(cat.ref.current!.getBoundingClientRect().top - tabBottom)
             }
         }).reduce((prev, curr)=> prev.height < curr.height ? prev : curr)
         setCurrentTab(minTabToCategory.key);
