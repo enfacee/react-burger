@@ -18,7 +18,7 @@ export function ForgotPasswordPage(){
 		dispatch(forgotPassword({email}));
 	}, [email, dispatch]);
 
-    const formOnSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         resetPassword();
     }
@@ -29,7 +29,7 @@ export function ForgotPasswordPage(){
 		);
 	}
     return (
-        <form onSubmit={formOnSubmit}>
+        <form onSubmit={handleSubmit}>
             <div className={`${styles.pageContainer} mt-10`}>
                 <div className="text text_type_main-medium mb-6">Восстановление пароля</div>
                 <div className={styles.inputs}>

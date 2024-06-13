@@ -14,12 +14,12 @@ export function RegisterPage(){
 		password: '',
     })
     const {email, name, password} = values;
-    const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(register({email, password, name}));
     }
     return (
-        <form onSubmit={onSubmit}>
+        <form onSubmit={handleSubmit}>
             <div className={`${styles.pageContainer} mt-10`}>
                 <div className="text text_type_main-medium mb-6">Регистрация</div>
                 <div className={styles.inputs}>

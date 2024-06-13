@@ -17,7 +17,7 @@ export function ResetPasswordPage(){
         token: '',
     })
     const { password, token } = values;
-    const formOnSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(resetPassword({password, token}));
     }
@@ -30,7 +30,7 @@ export function ResetPasswordPage(){
 		}
 	}
     return (
-        <form onSubmit={formOnSubmit}>
+        <form onSubmit={handleSubmit}>
             <div className={`${styles.pageContainer} mt-10`}>
                 <div className="text text_type_main-medium mb-6">Восстановление пароля</div>
                 <div className={styles.inputs}>

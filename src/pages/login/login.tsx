@@ -13,12 +13,12 @@ export function LoginPage(){
 		password: '',
 	});
 	const { email, password } = values;
-    const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(login({email, password}));
     }
     return (
-        <form onSubmit={onSubmit}>
+        <form onSubmit={handleSubmit}>
             <div className={`${styles.pageContainer} mt-10`}>
                 <p className="text text_type_main-medium mb-6">Вход</p>
                 <div className={styles.inputs}>

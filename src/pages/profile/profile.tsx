@@ -21,7 +21,7 @@ export function ProfilePage(){
         email: user!.email,
         password: '',
     });
-    const formOnSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(changeUserInfo({
             name,
@@ -49,7 +49,7 @@ export function ProfilePage(){
                 <div className="text text_type_main-default text_color_inactive mt-20">В этом разделе вы можете изменить свои персональные данные</div>
             </div>            
             <div className={styles.inputs}>
-                <form onSubmit={formOnSubmit}>
+                <form onSubmit={handleSubmit}>
                     <Input type={'text'} placeholder={'Имя'} icon={'EditIcon'} value={name} name={'name'} onChange={handleChange}	onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}/>
                     <EmailInput placeholder={'email'} isIcon={true} value={email} name={'email'} onChange={handleChange} extraClass='mt-6'/>
                     <PasswordInput placeholder={'Пароль'} icon={'EditIcon'} value={password} name={'password'} onChange={handleChange} extraClass='mt-6'/>
