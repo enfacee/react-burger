@@ -133,7 +133,8 @@ export const fetchWithRefresh = async <T extends ResponseType>(url: string, opti
   try {
     const res = await fetch(url, options);
     return await checkReponse<T>(res);
-  } catch (err: any) {
+  } catch (e) {
+    const err = e as TError;
     if (err.message === "jwt expired") {      
       const refreshData = await refreshToken(); //обновляем токен
       options.headers = {
@@ -147,3 +148,6 @@ export const fetchWithRefresh = async <T extends ResponseType>(url: string, opti
     }
   }
 };
+type TError = {
+  message: string;
+}
