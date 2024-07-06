@@ -1,7 +1,7 @@
 import styles from './app.module.css';
 import AppHeader from '../app-header/app-header';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import { HomePage, LoginPage, RegisterPage, ResetPasswordPage, ForgotPasswordPage, NotFound404Page, ProfilePage } from '../../pages';
+import { HomePage, LoginPage, RegisterPage, ResetPasswordPage, ForgotPasswordPage, NotFound404Page, ProfilePage, FeedPage, ProfileInfoPage, ProfileOrdersPage } from '../../pages';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-deltails';
 import { OnlyAuth, OnlyUnAuth } from '../protected-route';
@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import { getUser } from '../../services/actions/user';
 import { getIngredients } from '../../services/actions/ingredients';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import Order from '../order/order';
 
 export default function App() {
   const location = useLocation();
@@ -43,11 +44,13 @@ export default function App() {
         <Route path='/forgot-password' element={<OnlyUnAuth component={<ForgotPasswordPage/>}/>} />
         <Route path='/reset-password' element={<OnlyUnAuth component={<ResetPasswordPage/>}/>} />
         <Route path='/ingredients/:ingredientId' element={<IngredientDetails/>} />
-        <Route path='/profile' element={<OnlyAuth component={<ProfilePage/>}/>} />
         <Route path='/profile' element={<OnlyAuth component={<ProfilePage/>}/>}>
-          <Route path='orders' element={<OnlyAuth component={<ProfilePage/>}/>} />
-          <Route path='orders/:number' element={<OnlyAuth component={<ProfilePage/>}/>} />
+          <Route index element={<OnlyAuth component={<ProfileInfoPage/>}/>} />
+          <Route path='orders' element={<OnlyAuth component={<ProfileOrdersPage/>}/>} />
         </Route>
+        <Route path='/feed' element={<FeedPage/>} />
+        <Route path='/profile/orders/:number' element={<OnlyAuth component={<Order/>}/>} />
+        <Route path='/feed/:number' element={<Order/>} />
         <Route path='*' element={<NotFound404Page/>}/>
       </Routes>
       {background && (
@@ -57,6 +60,22 @@ export default function App() {
               element={
                 <Modal header={'Детали ингредиента'} onClose={handleModalClose}>
                   <IngredientDetails />
+                </Modal>
+              }
+            />
+            <Route
+              path='/profile/orders/:number'
+              element={
+                <Modal onClose={handleModalClose}>
+                  <Order/>
+                </Modal>
+              }
+            />
+            <Route
+              path='/feed/:number'
+              element={
+                <Modal onClose={handleModalClose}>
+                  <Order/>
                 </Modal>
               }
             />
