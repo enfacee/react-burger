@@ -1,0 +1,26 @@
+.card {
+	background-color: #1c1c21;
+    width: 500px;
+    border-radius: 5vh;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    color: inherit;
+    text-decoration: inherit;
+}
+.main {
+    display: flex;
+    justify-content: space-between;
+}
+.composition {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+}
+.ingredients {
+	position: relative;
+	height: 60px;
+	div {
+		position: absolute;
+	}
+}
