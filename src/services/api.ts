@@ -3,6 +3,7 @@ import { ResponseType, TDataIngredientResponse, TLogoutResponse, TOrderResponse,
 import { checkReponse, request } from "../utils/commonApi";
 
 export const BASE_URL = 'https://norma.nomoreparties.space/api';
+export const WSS_URL = 'wss://norma.nomoreparties.space/orders';
 export const USER_URL = `${BASE_URL}/auth/user`;
 
 export const getIngredients = (): Promise<TDataIngredientResponse> => {

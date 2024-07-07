@@ -5,6 +5,8 @@ import { useAppSelector } from "../../hooks/hooks";
 import { useMemo } from "react";
 import CircleIngredient from "../circle-ingredient/circle-ingredient";
 import { useLocation } from "react-router-dom";
+import OrderStatus from "../order-status/order-status";
+import { OrderStatusEnum } from "../../types/orders";
 
 export default function Order(){    
 	const location = useLocation();
@@ -16,7 +18,7 @@ export default function Order(){
         <div className={!isInModal ? `${styles.page}`: ''}>            
             <p className='text text_type_digits-default mb-10'>#034535</p>
             <p className='text text_type_main-medium mb-3'>Black Hole Singularity острый бургер</p>
-            <p className="text text_type_main-default text_color_success mb-15">Выполнен</p>
+            <OrderStatus className='mb-15' status={OrderStatusEnum.DONE}/>
             <p className='text text_type_main-medium mb-6'>Состав:</p>
             <div className={`${styles.ingredients} mb-10`}>
                 {
@@ -32,7 +34,7 @@ export default function Order(){
                 }                
             </div>
             <div className={styles.footer}>
-                <FormattedDate date={new Date()} className='text_color_inactive'/>
+                <FormattedDate date={new Date()} className='text text_type_main-default text_color_inactive'/>
                 <Price price={510}/>
             </div>
         </div>
