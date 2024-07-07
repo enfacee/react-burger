@@ -1,4 +1,5 @@
 import { TIngredientType, TUser } from "./ingredient";
+import { TOrder } from "./orders";
 
 export type TIngredientResponse = {
 	_id: string;
@@ -20,6 +21,13 @@ export type TOrderResponse = {
 	};
 	success: boolean;
 	message?: string;
+}
+
+export type TOrdersFeedResponse = {
+    success: boolean,
+    orders: Array<TOrder>,
+    total: number,
+    totalToday: number
 }
 export type TUserResponse = {
 	success: boolean;
@@ -43,4 +51,4 @@ export type TDataIngredientResponse = {
 	data: Array<TIngredientResponse>;
 	message?: string;
 };
-export type ResponseType = TDataIngredientResponse | TUserResponse | TLogoutResponse
+export type ResponseType = TDataIngredientResponse | TUserResponse | TLogoutResponse | TOrdersFeedResponse

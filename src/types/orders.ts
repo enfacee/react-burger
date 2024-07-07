@@ -8,13 +8,6 @@ export type TOrder = {
     updateAt: string
 }
 
-export type TOrdersFeed = {
-    success: boolean,
-    orders: Array<TOrder>,
-    total: number,
-    totalToday: number
-}
-
 export enum WebsocketStatus {
     CONNECTING = 'CONNECTING...',
     ONLINE = 'ONLINE',

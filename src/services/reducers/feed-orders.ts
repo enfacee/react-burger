@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { OrderStatusEnum, TOrder, TOrdersFeed, WebsocketStatus } from "../../types/orders";
+import { OrderStatusEnum, TOrder, WebsocketStatus } from "../../types/orders";
+import { TOrdersFeedResponse } from "../../types/response";
 
 type TFeedOrdersState = {
     status: WebsocketStatus,
@@ -37,7 +38,7 @@ export const feedOrdersSlice = createSlice({
         wsError: (state, action: PayloadAction<string>) => {
             state.connectionError = action.payload;
         },
-        wsMessage: (state, action: PayloadAction<TOrdersFeed>) => {
+        wsMessage: (state, action: PayloadAction<TOrdersFeedResponse>) => {
             state.orders = action.payload.orders.filter(order => order.ingredients.length > 0);
             state.total = action.payload.total;
             state.totalToday = action.payload.totalToday;

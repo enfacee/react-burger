@@ -10,6 +10,7 @@ import { getUser } from '../../services/actions/user';
 import { getIngredients } from '../../services/actions/ingredients';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import Order from '../order/order';
+import Preloader from '../preloader/preloader';
 
 export default function App() {
   const location = useLocation();
@@ -31,9 +32,7 @@ export default function App() {
     <div className={styles.app}>
       {(loading || !isUserAuth) && 
 				<Modal>
-					<div className={styles.loading}>
-						<p className="text text_type_main-medium p-15">Загрузка...</p>
-					</div>
+          <Preloader/>
 				</Modal>
 			}
       <AppHeader/>
