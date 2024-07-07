@@ -61,7 +61,6 @@ export const socketMiddleware = (
 
                         if (withTokenRefresh && parsedData.message === "Invalid or missing token") {
                             refreshToken()
-                            // refreshToken()
                                 .then(refreshData => {
                                     const wssUrl = new URL(url);
                                     wssUrl.searchParams.set(
