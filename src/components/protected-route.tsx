@@ -1,5 +1,4 @@
 import { Navigate, useLocation } from "react-router-dom";
-import PropTypes from 'prop-types'
 import { useAppSelector } from "../hooks/hooks";
 
 type TProtectedProps = {
@@ -25,10 +24,6 @@ const Protected = ({ onlyUnAuth = false, component }: TProtectedProps) => {
   return component;
 };
 
-Protected.propTypes = {
-  onlyUnAuth: PropTypes.bool,
-  component: PropTypes.element.isRequired
-}
 export const OnlyAuth = Protected;
 export const OnlyUnAuth = ({ component }: { component: JSX.Element }) => (
   <Protected onlyUnAuth={true} component={component} />

@@ -27,7 +27,6 @@ export default function App() {
     dispatch(getUser());
     dispatch(getIngredients());
   }, [dispatch]);
-
   return (
     <div className={styles.app}>
       {(loading || !isUserAuth) && 
@@ -65,9 +64,11 @@ export default function App() {
             <Route
               path='/profile/orders/:number'
               element={
-                <Modal onClose={handleModalClose}>
-                  <Order/>
-                </Modal>
+                <OnlyAuth component={
+                  <Modal onClose={handleModalClose}>
+                    <Order/>
+                  </Modal>
+                  }/>
               }
             />
             <Route
