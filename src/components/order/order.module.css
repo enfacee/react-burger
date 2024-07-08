@@ -1,0 +1,21 @@
+.page {
+    width: 700px;
+    margin: 0 auto;
+}
+.ingredients {
+    max-height: 310px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow-y: scroll;
+}
+.ingredient {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+.footer {
+    display: flex;
+    justify-content: space-between;
+}

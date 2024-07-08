@@ -1,12 +1,17 @@
 import { RequestOptions, TForgotPasswordRequest, TLoginRequest, TRegisterRequest, TResetPasswordRequest } from "../types/request";
-import { ResponseType, TDataIngredientResponse, TLogoutResponse, TOrderResponse, TRefreshTokenResponse, TUserResponse } from "../types/response";
+import { ResponseType, TDataIngredientResponse, TLogoutResponse, TOrderResponse, TOrdersFeedResponse, TRefreshTokenResponse, TUserResponse } from "../types/response";
 import { checkReponse, request } from "../utils/commonApi";
 
 export const BASE_URL = 'https://norma.nomoreparties.space/api';
+export const WSS_URL = 'wss://norma.nomoreparties.space/orders';
 export const USER_URL = `${BASE_URL}/auth/user`;
 
 export const getIngredients = (): Promise<TDataIngredientResponse> => {
   return request<TDataIngredientResponse>(`${BASE_URL}/ingredients`);
+}
+
+export const getOrderByNumber = (number: string): Promise<TOrdersFeedResponse> => {
+  return request<TOrdersFeedResponse>(`${BASE_URL}/orders/${number}`);
 }
 
 export const sendOrder = async (ingredients: Array<string>) => {

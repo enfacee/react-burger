@@ -1,0 +1,11 @@
+.mainContainer {
+    max-height: Calc(100vh - 120px);
+    overflow: hidden;
+    display: flex;
+    gap: 60px;
+    justify-content: center;
+  }
+  .box {
+    align-items: flex-start;
+    min-width: 500px;
+  }

@@ -1,17 +1,20 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { sendOrder } from '../actions/order';
-import { TOrderResponse } from '../../types/response';
+import { getOrderByNumber, sendOrder } from '../actions/order';
+import { TOrderResponse, TOrdersFeedResponse } from '../../types/response';
+import { TOrder } from '../../types/orders';
 
 type TOrderState = {
     loading: boolean;
     success: boolean | null;
     order: TOrderResponse | null;
+    currentOrder: TOrder | null;
 }
 
 const initialState: TOrderState = {
     loading: false,
     success: null,
     order: null,
+    currentOrder: null
 }
   
 export const orderSlice = createSlice({
@@ -38,7 +41,10 @@ export const orderSlice = createSlice({
                 state.loading = false;
                 state.success = payload.success;
                 state.order = payload;
-            })      
+            })
+            .addCase(getOrderByNumber.fulfilled, (state, {payload}: PayloadAction<TOrdersFeedResponse>) => {
+                state.currentOrder = payload.orders.length > 0 ? payload.orders[0] : null;
+            })   
     }
 })
   

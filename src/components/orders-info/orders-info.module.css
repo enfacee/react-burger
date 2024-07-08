@@ -1,0 +1,18 @@
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+}
+.orders {
+    display: flex;
+    justify-content: flex-start;
+    gap: 36px;
+}
+.numbers {
+    max-height: 320px;
+    display: flex;
+    align-content: flex-start;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 8px;
+}

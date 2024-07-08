@@ -1,7 +1,7 @@
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 type TPrice = {
-    price: number;
+    price: number | string;
     size?: "default" | "medium" | "large"
 }
 
