@@ -35,3 +35,22 @@
 //     }
 //   }
 // }
+export { };
+Cypress.Commands.add("getModalHeader", () => {
+    cy.get('[data-cy=modal-header]')
+})
+Cypress.Commands.add("getIngredient", (label) => {
+    cy.get('[data-cy=ingredient]').contains(label)
+})
+Cypress.Commands.add("getOrderButton", () => {
+    cy.get('[data-cy=order-button]').children().first()
+})
+declare global {
+    namespace Cypress {
+      interface Chainable {
+        getModalHeader(): Chainable<Element>,
+        getIngredient(label: string): Chainable<Element>
+        getOrderButton(): Chainable<Element>,
+      }
+    }
+  }
