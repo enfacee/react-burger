@@ -8,7 +8,7 @@ type TUserState = {
 	passwordChanged: boolean;
     tokenSent: boolean;
 };
-const initialState : TUserState = {
+export const initialState : TUserState = {
     user: null,
     isUserAuth: false,
     passwordChanged: false,
@@ -28,7 +28,7 @@ const initialState : TUserState = {
         })
         .addCase(getUser.rejected, (state) => {
             state.user = null;
-            state.isUserAuth = true;
+            state.isUserAuth = false;
         })
         .addCase(getUser.fulfilled, (state, {payload}) => {
             state.isUserAuth = true;      

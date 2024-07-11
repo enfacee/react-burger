@@ -3,14 +3,14 @@ import { getOrderByNumber, sendOrder } from '../actions/order';
 import { TOrderResponse, TOrdersFeedResponse } from '../../types/response';
 import { TOrder } from '../../types/orders';
 
-type TOrderState = {
+export type TOrderState = {
     loading: boolean;
     success: boolean | null;
     order: TOrderResponse | null;
     currentOrder: TOrder | null;
 }
 
-const initialState: TOrderState = {
+export const initialState: TOrderState = {
     loading: false,
     success: null,
     order: null,
