@@ -21,7 +21,7 @@ describe('user reducer', () => {
     it('getUser rejected', () => {
         const action = { type: getUser.rejected.type };
         const state = userSlice.reducer(initialState, action);
-        expect(state).toEqual({...initialState, user: null, isUserAuth: false});
+        expect(state).toEqual({...initialState, user: null, isUserAuth: true});
     })
 
     it('getUser fulfilled', () => {

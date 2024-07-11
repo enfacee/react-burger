@@ -32,7 +32,7 @@ export default function Ingredient({ingredient}:TIngredientProps){
         <Link key={ingredientId} to={`/ingredients/${ingredientId}`} state={{ background: location }} className={styles.ingredient} ref={dragRef}>
             <img src={ingredient.image} className="pl-4 pr-4 pb-1" alt="Изображение ингридиента"/>
             <Price price={ingredient.price}/>
-            <p className="text text_type_main-default mt-1">{ingredient.name}</p>
+            <p className="text text_type_main-default mt-1" data-cy="ingredient">{ingredient.name}</p>
             {
                 count > 0 ? <Counter count={count}/> : null
             }

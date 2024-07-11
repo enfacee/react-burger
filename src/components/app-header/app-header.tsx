@@ -26,7 +26,7 @@ export default function AppHeader(){
         <div className={styles.right}>
             <Link to='/profile' className ={`${styles.button} p-5 ml-2 mt-4 mb-4`}>
                 <ProfileIcon type={pathname.startsWith('/profile') ? 'primary': 'secondary'}/>
-                <p className={'text text_type_main-default ml-2' + (pathname.startsWith('/profile') ? '': ' text_color_inactive')}>{!!user ? user.name: 'Личный кабинет'}</p>
+                <p className={'text text_type_main-default ml-2' + (pathname.startsWith('/profile') ? '': ' text_color_inactive')} data-cy="user">{!!user ? user.name: 'Личный кабинет'}</p>
             </Link>
         </div>
       </header>)

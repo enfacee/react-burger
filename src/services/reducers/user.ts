@@ -28,7 +28,7 @@ export const initialState : TUserState = {
         })
         .addCase(getUser.rejected, (state) => {
             state.user = null;
-            state.isUserAuth = false;
+            state.isUserAuth = true;
         })
         .addCase(getUser.fulfilled, (state, {payload}) => {
             state.isUserAuth = true;      
