@@ -39,8 +39,8 @@ export default function Modal({children, header, onClose}: TModal){
              (<ModalOverlay closeModal={handleCloseModal}>
                 <div className={`${styles.modal} p-10`} onClick={handleOnClick}>
                     <div className={`${styles.header}`}>
-                        <p className="text text_type_main-large">{header}</p>
-                        {onClose != null &&<CloseIcon type="primary" onClick={handleCloseModal}/>}
+                        <p className="text text_type_main-large" data-cy="modal-header">{header}</p>
+                        {onClose != null && <div onClick={handleCloseModal} data-cy="modal-close"><CloseIcon type="primary"/></div>}
                     </div>
                     {children}
                 </div>

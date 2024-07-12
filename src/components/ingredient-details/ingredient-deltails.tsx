@@ -15,7 +15,7 @@ export default function IngredientDetails(){
         <div className={styles.content}>
             {!isInModal && <p className="text text_type_main-large mt-20">Детали ингредиента</p>}
             <img src={ingredient.image_large} alt='Изображение ингридиента'/>
-            <p className="text text_type_main-medium mt-4 mb-8">{ingredient.name}</p>
+            <p className="text text_type_main-medium mt-4 mb-8" data-cy="modal-ingredient">{ingredient.name}</p>
             <div className={`${styles.items} text text_type_main-default text_color_inactive`}>
                 <div>
                     <p>Каллории, ккал</p>

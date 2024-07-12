@@ -8,7 +8,7 @@ type TModalOverlay = {
 
 export default function ModalOverlay({children, closeModal}: TModalOverlay){
     return (
-        <div className={styles.overlay} onClick={closeModal}>
+        <div className={styles.overlay} onClick={closeModal} data-cy="modal-overlay">
             {children}
         </div>
     )

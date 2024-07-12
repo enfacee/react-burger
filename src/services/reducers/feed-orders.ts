@@ -12,7 +12,7 @@ type TFeedOrdersState = {
     totalToday: number
 }
 
-const initialState : TFeedOrdersState = {
+export const initialState : TFeedOrdersState = {
     status: WebsocketStatus.OFFLINE,
     orders: [],
     connectionError: null,

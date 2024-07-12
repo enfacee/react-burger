@@ -8,7 +8,7 @@ type TUserState = {
 	passwordChanged: boolean;
     tokenSent: boolean;
 };
-const initialState : TUserState = {
+export const initialState : TUserState = {
     user: null,
     isUserAuth: false,
     passwordChanged: false,

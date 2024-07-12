@@ -24,7 +24,7 @@ export default function Bun({bun, type}: TBun){
         borderStyle: isHover ?"dotted":"none"
     }
     return(
-        <div className={styles.bun} ref={dropTarget} >
+        <div className={styles.bun} ref={dropTarget} data-cy={`bun-constructor-${type}`} >
             {
                 bun ? <ConstructorElement 
                         type={type}

@@ -57,7 +57,7 @@ export default function BurgerContructor(){
     return(
         <div className={`${styles.burgerContructor} mt-25 pm-4 mr-4`}>            
             <Bun bun={bun} type={'top'}/>
-            <div className={styles.elementsContainer} ref={dropTarget}>
+            <div className={styles.elementsContainer} ref={dropTarget} data-cy="ingredients-contructor" >
             {
                 !ingredients.length 
                     ? <div className={`${styles.emptyElement} constructor-element text text_type_main-default ml-2`} style={style}>Выберите начинку</div>
@@ -68,11 +68,13 @@ export default function BurgerContructor(){
             <Bun bun={bun} type={'bottom'}/>
             <div className={`${styles.footer} mt-10 mb-10`}>
                 <Price price={totalPrice} size={"medium"}/>
-                <Button htmlType="button" type="primary" size="large" 
-                disabled ={!bun || !ingredients.length }
-                onClick={createOrder}>
-                    Оформить заказ
-                </Button>
+                <div data-cy="order-button">
+                    <Button htmlType="button" type="primary" size="large" 
+                    disabled ={!bun || !ingredients.length }
+                    onClick={createOrder}>
+                        Оформить заказ
+                    </Button>
+                </div>
             </div>
             {loading && 
 				<Modal>
